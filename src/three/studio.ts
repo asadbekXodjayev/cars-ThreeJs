@@ -10,6 +10,7 @@ export class Studio {
   readonly group = new THREE.Group();
   readonly rim: THREE.SpotLight;
   private envRT: THREE.WebGLRenderTarget;
+  private backdropTex?: THREE.Texture;
 
   constructor(scene: THREE.Scene, renderer: THREE.WebGLRenderer) {
     scene.background = new THREE.Color(0x0a0a0c);
@@ -49,6 +50,22 @@ export class Studio {
     // gentle ambient fill
     this.group.add(new THREE.HemisphereLight(0x20242c, 0x05050700 & 0xffffff, 0.5));
 
+    // studio backdrop cyclorama — a REAL generated raster mapped as a texture
+    // onto a large curved-feeling plane behind the car (lazy: loaded async so
+    // it never blocks first paint; the scene reads fine before it lands).
+    const loader = new THREE.TextureLoader();
+    loader.load('/img/studio-backdrop.webp', (tex) => {
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tex.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy());
+      this.backdropTex = tex;
+      const plane = new THREE.Mesh(
+        new THREE.PlaneGeometry(48, 24),
+        new THREE.MeshBasicMaterial({ map: tex, toneMapped: true, depthWrite: false })
+      );
+      plane.position.set(0, 6, -16);
+      this.group.add(plane);
+    });
+
     scene.add(this.group);
   }
 
@@ -59,6 +76,7 @@ export class Studio {
 
   dispose(): void {
     this.envRT.dispose();
+    this.backdropTex?.dispose();
     this.group.traverse((o) => {
       if (o instanceof THREE.Mesh) {
         o.geometry.dispose();

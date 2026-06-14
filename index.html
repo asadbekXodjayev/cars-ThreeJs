@@ -14,8 +14,9 @@
   <meta property="og:title" content="VANTAGE — A Scroll-Driven Walkaround" />
   <meta property="og:description"
     content="Silhouette → reveal → exploded engine → live clearcoat configurator. A Three.js experience." />
-  <meta property="og:image" content="/og/cover.svg" />
+  <meta property="og:image" content="/og/home.svg" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="/og/home.svg" />
 
   <link rel="icon"
     href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='10' fill='%230A0A0C'/%3E%3Cpath d='M10 30 Q24 12 38 30' fill='none' stroke='%23FF4D17' stroke-width='3.5' stroke-linecap='round'/%3E%3Ccircle cx='17' cy='32' r='3.4' fill='%23F1EDE4'/%3E%3Ccircle cx='31' cy='32' r='3.4' fill='%23F1EDE4'/%3E%3C/svg%3E" />
@@ -110,6 +111,12 @@
         <p class="body">Scroll sweeps the dial. The clearcoat re-tints in real time and the studio's
           rim-light follows the hue — the whole room wears the colour with the car.</p>
       </div>
+      <!-- Paint & trim plate gallery (real raster imagery, lazy + scroll-revealed) -->
+      <figure class="plates" id="plates" aria-label="Clearcoat swatches and engineering plates">
+        <ul class="plate-grid" id="plate-grid"></ul>
+        <figcaption class="plate-cap">CLEARCOAT MACRO · FLAKE STUDY · ENGINEERING PLATES</figcaption>
+      </figure>
+
       <!-- Signature: the clearcoat dial -->
       <div class="dial" id="dial" role="group" aria-label="Paint colour">
         <svg class="dial-ring" viewBox="0 0 200 200" aria-hidden="true">

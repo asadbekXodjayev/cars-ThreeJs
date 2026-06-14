@@ -14,6 +14,7 @@ import {
   buildSpecs, observeReveals, setLoader, hideLoader, updateRail, updateChapter,
   updateReadout, updateDial, setDialLive, resetAccent, bindMotionToggle,
 } from './ui/hud';
+import { buildGallery } from './ui/gallery';
 
 /* ----------------------- small math helpers ----------------------- */
 const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
@@ -85,6 +86,7 @@ async function boot(): Promise<void> {
 
   /* ----------------------------- UI ----------------------------- */
   buildSpecs();
+  buildGallery();
   observeReveals();
   reducedMotion = bindMotionToggle((r) => {
     reducedMotion = r;
