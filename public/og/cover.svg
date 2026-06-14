@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="g" cx="50%" cy="42%" r="70%">
+      <stop offset="0%" stop-color="#1a1b20"/>
+      <stop offset="100%" stop-color="#0a0a0c"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#g)"/>
+  <path d="M360 380 Q600 250 840 380" fill="none" stroke="#ff4d17" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="470" cy="392" r="22" fill="#f1ede4"/>
+  <circle cx="730" cy="392" r="22" fill="#f1ede4"/>
+  <text x="600" y="200" font-family="'Bricolage Grotesque',sans-serif" font-size="120" font-weight="800"
+    fill="#f1ede4" text-anchor="middle" letter-spacing="2">VANTAGE</text>
+  <text x="600" y="520" font-family="monospace" font-size="26" fill="#6e7681" text-anchor="middle"
+    letter-spacing="6">A SCROLL-DRIVEN WALKAROUND · THREE.JS</text>
+</svg>
