@@ -1,6 +1,6 @@
 # QA-REPORT — VANTAGE cross-device matrix
 
-Generated 2026-06-14T17:53:33.934Z · headless Chrome (SwiftShader) · `vite preview` :4181
+Generated 2026-06-16T14:54:55.998Z · headless Chrome (SwiftShader) · `vite preview` :4181
 
 ## Width matrix (route `/`)
 

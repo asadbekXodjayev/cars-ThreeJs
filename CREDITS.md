@@ -1,8 +1,17 @@
 # CREDITS
 
 ## 3D & code
-- All geometry (car shell, cabin, wheels, drivetrain) is **procedurally generated** in this repo — no third-party models. No licensing required.
-- Environment reflections: Three.js built-in `RoomEnvironment` (MIT, part of three).
+- **Car model** — `public/models/ferrari.glb` (+ baked AO contact shadow
+  `public/models/ferrari_ao.png`): the **"Ferrari" model from the official
+  three.js examples** (`examples/models/gltf/ferrari.glb`), as used in the
+  `webgl_materials_car` demo. Part of the three.js repo, MIT-licensed. Draco-
+  compressed; decoded client-side with the bundled Draco decoder in
+  `public/draco/` (`draco_decoder.wasm` + wrapper, Apache-2.0, Google).
+  Loaded/configured in `src/three/car.ts` — body uses the live clearcoat paint
+  material the configurator drives; rims/trim are chrome; glass is transmissive.
+- Studio scene (floor, lights, cyclorama) is **procedurally generated** in this
+  repo. Environment reflections: Three.js built-in `RoomEnvironment` (MIT) — no
+  HDRI download.
 
 ## Libraries
 - [three.js](https://threejs.org) — MIT

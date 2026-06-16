@@ -1,8 +1,8 @@
 # VANTAGE — a scroll-driven 3D car walkaround
 
-App 1 of 5 in the Three.js scroll-experience series. A concept sports car,
-revealed and dissected by scroll: **silhouette → exterior → exploded engine →
-live clearcoat configurator → spec telemetry → drive-away.**
+App 1 of 5 in the Three.js scroll-experience series. The official three.js
+"Ferrari" glTF model, revealed and dissected by scroll: **silhouette → exterior
+→ exploded teardown → live clearcoat configurator → spec telemetry → drive-away.**
 
 ## Stack
 Vite · TypeScript · three.js · GSAP · Lenis (vanilla three, no framework).
@@ -13,7 +13,7 @@ npm install
 npm run dev      # http://localhost:5173
 npm run build    # tsc + production bundle → dist/
 npm run preview  # serve the build
-node qa/smoke.mjs # headless QA: console errors + per-chapter screenshots
+npm run qa       # headless QA: console errors + cross-device screenshots
 ```
 
 ## Architecture
@@ -23,11 +23,14 @@ src/
   style.css          design tokens + layout (Studio & Telemetry system)
   three/
     studio.ts        cyclorama, lights, RoomEnvironment reflections, fog
-    car.ts           procedural car: extruded shell, glass, wheels, exploding drivetrain
+    car.ts           loads the Ferrari glTF (Draco): clearcoat paint body, chrome rims,
+                     glass, baked AO shadow, real-part exploded view, wheel spin
     perf.ts          adaptive DPR ladder driven by runtime FPS
   ui/hud.ts          loader, telemetry HUD, reveal observer, the Clearcoat Dial
   data/              chapters, specs, paint palette
-qa/smoke.mjs         puppeteer-core headless harness
+public/models/       ferrari.glb + ferrari_ao.png (lazy runtime assets)
+public/draco/        Draco wasm decoder (served for GLTFLoader)
+qa/matrix.mjs        puppeteer-core headless harness
 ```
 
 ## Routing

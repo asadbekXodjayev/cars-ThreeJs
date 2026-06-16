@@ -26,13 +26,15 @@ const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
 /* ----------------------- camera keyframes ------------------------- */
 interface Key { pos: [number, number, number]; tgt: [number, number, number]; fov: number; }
+// targets/heights sit ~0.5 lower than the old concept body — the Ferrari GLB
+// rests on the studio floor rather than floating at y≈0.42.
 const KEYS: Key[] = [
-  { pos: [8.2, 1.0, 9.0], tgt: [0, 0.6, 0], fov: 36 }, // 0 silhouette
-  { pos: [5.4, 1.7, 5.6], tgt: [0, 0.7, 0], fov: 40 }, // 1 exterior
-  { pos: [4.4, 3.3, 4.6], tgt: [0, 1.0, 0], fov: 44 }, // 2 engine
-  { pos: [5.2, 1.3, 5.1], tgt: [0, 0.7, 0], fov: 40 }, // 3 configurator
-  { pos: [6.6, 1.9, 6.2], tgt: [0, 0.7, 0], fov: 37 }, // 4 specs
-  { pos: [3.0, 0.9, 7.8], tgt: [2.2, 0.4, 0], fov: 47 }, // 5 drive away
+  { pos: [8.2, 0.55, 9.0], tgt: [0, 0.05, 0], fov: 36 }, // 0 silhouette
+  { pos: [5.4, 1.2, 5.6], tgt: [0, 0.1, 0], fov: 40 }, // 1 exterior
+  { pos: [4.4, 2.7, 4.6], tgt: [0, 0.45, 0], fov: 44 }, // 2 engine
+  { pos: [5.2, 0.85, 5.1], tgt: [0, 0.1, 0], fov: 40 }, // 3 configurator
+  { pos: [6.6, 1.4, 6.2], tgt: [0, 0.1, 0], fov: 37 }, // 4 specs
+  { pos: [3.0, 0.5, 7.8], tgt: [2.2, -0.05, 0], fov: 47 }, // 5 drive away
 ];
 
 const _pos = new THREE.Vector3();
@@ -73,6 +75,7 @@ async function boot(): Promise<void> {
   const studio = new Studio(scene, renderer);
   const car = new Car();
   scene.add(car.group);
+  let carLoadError = false;
 
   /* post-processing (bloom for the redline glow) */
   const composer = new EffectComposer(renderer);
@@ -167,9 +170,14 @@ async function boot(): Promise<void> {
   });
 
   /* --------------------------- loading -------------------------- */
-  // textures are procedural, so "loading" is the env/PMREM warmup + fonts
+  // load the Ferrari glTF — real download progress drives the loader bar
   await document.fonts.ready.catch(() => undefined);
-  for (let i = 0; i <= 100; i += 8) { setLoader(i); await frame(); }
+  try {
+    await car.load((p) => setLoader(Math.min(99, Math.round(p))));
+  } catch (err) {
+    carLoadError = true;
+    console.error('[VANTAGE] car model failed to load', err);
+  }
   setLoader(100);
   hideLoader();
 
@@ -221,7 +229,7 @@ async function boot(): Promise<void> {
     if (s > 3.6 && s < 4.6 && !reducedMotion) car.group.rotation.y += dt * 0.18;
 
     // configurator paint sweep (chapter 3 region)
-    const inConfig = s > 2.55 && s < 3.55;
+    const inConfig = s > 2.55 && s < 3.55 && !carLoadError;
     setDialLive(inConfig);
     if (inConfig) {
       const local = clamp01((s - 2.6) / 0.85);
@@ -261,10 +269,6 @@ async function boot(): Promise<void> {
     composer.setSize(w, h);
     bloom.setSize(w, h);
   });
-}
-
-function frame(): Promise<void> {
-  return new Promise((r) => requestAnimationFrame(() => r()));
 }
 
 void boot();
